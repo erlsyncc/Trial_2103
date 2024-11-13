@@ -1,9 +1,7 @@
-
 package vehiclerentasystem;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Scanner;
 
 public class RentalForm {
     private String formId;
@@ -36,59 +34,87 @@ public class RentalForm {
         this.rentalCost = calculateRentalCost(vehicleId, rentalDays);
         this.rentalStatus = "Created";
         
-        System.out.println("Rental form created with ID: " + formId);
-        System.out.println("Rental days: " + rentalDays);
-        System.out.println("Rental cost: $" + rentalCost);
+        displayFormStep("create");
     }
-    
-    
-    public void updateRentalForm(String newRentalDate, String newReturnDate, String newReturnDate1) {
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.print("Enter rental form ID to update: ");
-        String inputFormId = scanner.next();
-        
-        if (this.formId.equals(inputFormId) && !"Finalized".equals(this.rentalStatus)) {
+
+    // Method to update a rental form's rental and return dates
+    public void updateRentalForm(String formId, String newRentalDate, String newReturnDate) {
+        if (this.formId.equals(formId) && !"Finalized".equals(this.rentalStatus)) {
             this.rentalDate = newRentalDate;
             this.returnDate = newReturnDate;
             int rentalDays = calculateRentalDays(newRentalDate, newReturnDate);
             this.rentalCost = calculateRentalCost(vehicleId, rentalDays);
-            System.out.println("Rental form updated.");
+            displayFormStep("update");
         } else {
             System.out.println("Cannot update rental form. Either form ID does not match or rental is already finalized.");
         }
     }
 
     // Method to cancel a rental form
-    public void cancelRentalForm() {
-        Scanner scanner = new Scanner(System.in);
-        
-        System.out.print("Enter rental form ID to cancel: ");
-        String inputFormId = scanner.next();
-        
-        if (this.formId.equals(inputFormId) && !"Finalized".equals(this.rentalStatus)) {
+    public void cancelRentalForm(String formId) {
+        if (this.formId.equals(formId) && !"Finalized".equals(this.rentalStatus)) {
             this.rentalStatus = "Cancelled";
-            System.out.println("Rental form cancelled.");
+            displayFormStep("cancel");
         } else {
             System.out.println("Cannot cancel rental form. Either form ID does not match or rental is already finalized.");
         }
     }
 
-
-    // Method to calculate rental cost
+    // Method to calculate rental cost based on rental days and vehicle rate
     public double calculateRentalCost(String vehicleId, int rentalDays) {
         double dailyRate = getDailyRate(vehicleId); // Assume a method to get rate based on vehicle ID
         return dailyRate * rentalDays;
     }
 
-
     // Method to finalize a rental form
     public void finalizeRentalForm(String formId) {
         if (this.formId.equals(formId) && "Created".equals(this.rentalStatus)) {
             this.rentalStatus = "Finalized";
-            System.out.println("Rental form finalized.");
+            displayFormStep("finalize");
         } else {
             System.out.println("Cannot finalize rental form. Either form ID does not match or rental is already cancelled/finalized.");
+        }
+    }
+
+    // Switch-based display method for different form actions
+    private void displayFormStep(String action) {
+        switch (action.toLowerCase()) {
+            case "create":
+                System.out.println("Rental Form Created:");
+                System.out.println("Form ID: " + formId);
+                System.out.println("Client ID: " + clientId);
+                System.out.println("Vehicle ID: " + vehicleId);
+                System.out.println("Rental Date: " + rentalDate);
+                System.out.println("Return Date: " + returnDate);
+                System.out.println("Rental Cost: $" + rentalCost);
+                System.out.println("Status: " + rentalStatus);
+                break;
+                
+            case "update":
+                System.out.println("Rental Form Updated:");
+                System.out.println("Form ID: " + formId);
+                System.out.println("New Rental Date: " + rentalDate);
+                System.out.println("New Return Date: " + returnDate);
+                System.out.println("Updated Rental Cost: $" + rentalCost);
+                System.out.println("Status: " + rentalStatus);
+                break;
+                
+            case "cancel":
+                System.out.println("Rental Form Cancelled:");
+                System.out.println("Form ID: " + formId);
+                System.out.println("Status: " + rentalStatus);
+                break;
+                
+            case "finalize":
+                System.out.println("Rental Form Finalized:");
+                System.out.println("Form ID: " + formId);
+                System.out.println("Total Cost: $" + rentalCost);
+                System.out.println("Status: " + rentalStatus);
+                break;
+                
+            default:
+                System.out.println("Unknown action.");
+                break;
         }
     }
 
@@ -108,10 +134,4 @@ public class RentalForm {
     private double getDailyRate(String vehicleId) {
         return 100.0; // Example daily rate, replace with actual logic
     }
-
-    void cancelRentalForm(String rF001) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
-
-

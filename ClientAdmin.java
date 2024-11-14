@@ -3,7 +3,7 @@ package vehiclerentasystem;
 import java.util.Scanner;
 
 public class ClientAdmin {
-        private static Client_Input clientInfo = new Client_Input(); // Simulate ClientInfo
+        private static final Client_Input clientInfo = new Client_Input(); // Simulate ClientInfo
         private static Scanner scanner = new Scanner(System.in);
 
         public static void displayClientInfo() {

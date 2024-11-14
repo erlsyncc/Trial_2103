@@ -62,6 +62,9 @@ public class VehicleInventory {
 
     // Helper method to add a new vehicle
     private static void addNewVehicle() {
+        System.out.print("Enter Vehicle Type (Car, Truck, Van, Motor, SUV): ");
+        String vehicleType = scanner.nextLine().toLowerCase();
+
         System.out.print("Enter Vehicle ID: ");
         String vehicleID = scanner.nextLine();
         System.out.print("Enter Vehicle Make: ");
@@ -72,7 +75,41 @@ public class VehicleInventory {
         double rentalRate = scanner.nextDouble();
         scanner.nextLine(); // Consume newline after double input
 
-        Vehicles newVehicle = new Vehicles(vehicleID, make, model, rentalRate);
+        Vehicles newVehicle = null;
+
+        switch (vehicleType) {
+            case "car":
+                newVehicle = new VehicleCar(vehicleID, make, model, rentalRate, "Available");
+                break;
+            case "truck":
+                System.out.print("Enter Load Capacity (in tons): ");
+                double loadCapacity = scanner.nextDouble();
+                scanner.nextLine(); // Consume newline
+                newVehicle = new VehicleTruck(vehicleID, make, model, rentalRate, "Available", loadCapacity);
+                break;
+            case "van":
+                System.out.print("Enter Seating Capacity: ");
+                int seatingCapacity = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                newVehicle = new VehicleVan(vehicleID, make, model, rentalRate, "Available", seatingCapacity);
+                break;
+            case "motor":
+                System.out.print("Has Sidecar? (true/false): ");
+                boolean hasSideCar = scanner.nextBoolean();
+                scanner.nextLine(); // Consume newline
+                newVehicle = new VehicleMotor(vehicleID, make, model, rentalRate, "Available", hasSideCar);
+                break;
+            case "suv":
+                System.out.print("Is Four-Wheel Drive? (true/false): ");
+                boolean isFourWheelDrive = scanner.nextBoolean();
+                scanner.nextLine(); // Consume newline
+                newVehicle = new VehicleSuv( vehicleID, make, model, rentalRate, "Available", isFourWheelDrive);
+                break;
+            default:
+                System.out.println("Invalid vehicle type.");
+                return;
+        }
+
         vehiclesList.add(newVehicle);
         System.out.println("Vehicle added successfully: " + newVehicle);
     }
@@ -138,4 +175,3 @@ public class VehicleInventory {
         }
     }
 }
-

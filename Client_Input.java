@@ -5,96 +5,85 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Client_Input {
+    private String clientID;
+    private String clientName;
+    private String clientAddress;
+    private String clientContact;
+    private String clientEmail;
+    private String rentingStatus;
 
-    String getClientID() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Constructor for the Client class
+    Client_Input() {
+        this.clientID = clientID;
+        this.clientName = clientName;
+        this.clientAddress = clientAddress;
+        this.clientContact = clientContact;
+        this.clientEmail = clientEmail;
+        this.rentingStatus = rentingStatus;
     }
 
-    void setRentingStatus(String rented) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+    // Getters and Setters
+    public String getClientID() {
+        return clientID;
     }
 
-    private class Client {
-        private String clientID;
-        private String clientName;
-        private String clientAddress;
-        private String clientContact;
-        private String clientEmail;
-        private String rentingStatus;
+    public void setClientID(String clientID) {
+        this.clientID = clientID;
+    }
 
-        // Constructor for the Client class
-        public Client(String clientID, String clientName, String clientAddress, String clientContact, String clientEmail, String rentingStatus) {
-            this.clientID = clientID;
-            this.clientName = clientName;
-            this.clientAddress = clientAddress;
-            this.clientContact = clientContact;
-            this.clientEmail = clientEmail;
-            this.rentingStatus = rentingStatus;
-        }
+    public String getClientName() {
+        return clientName;
+    }
 
-        // Getters and Setters
-        public String getClientID() {
-            return clientID;
-        }
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 
-        public void setClientID(String clientID) {
-            this.clientID = clientID;
-        }
+    public String getClientAddress() {
+        return clientAddress;
+    }
 
-        public String getClientName() {
-            return clientName;
-        }
+    public void setClientAddress(String clientAddress) {
+        this.clientAddress = clientAddress;
+    }
 
-        public void setClientName(String clientName) {
-            this.clientName = clientName;
-        }
+    public String getClientContact() {
+        return clientContact;
+    }
 
-        public String getClientAddress() {
-            return clientAddress;
-        }
+    public void setClientContact(String clientContact) {
+        this.clientContact = clientContact;
+    }
 
-        public void setClientAddress(String clientAddress) {
-            this.clientAddress = clientAddress;
-        }
+    public String getClientEmail() {
+        return clientEmail;
+    }
 
-        public String getClientContact() {
-            return clientContact;
-        }
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
+    }
 
-        public void setClientContact(String clientContact) {
-            this.clientContact = clientContact;
-        }
+    public String getRentingStatus() {
+        return rentingStatus;
+    }
 
-        public String getClientEmail() {
-            return clientEmail;
-        }
+    public void setRentingStatus(String rentingStatus) {
+        this.rentingStatus = rentingStatus;
+    }
 
-        public void setClientEmail(String clientEmail) {
-            this.clientEmail = clientEmail;
-        }
-
-        public String getRentingStatus() {
-            return rentingStatus;
-        }
-
-        public void setRentingStatus(String rentingStatus) {
-            this.rentingStatus = rentingStatus;
-        }
-
-        @Override
-        public String toString() {
-            return "Client ID: " + clientID +
-                    "\nName: " + clientName +
-                    "\nAddress: " + clientAddress +
-                    "\nContact: " + clientContact +
-                    "\nEmail: " + clientEmail +
-                    "\nRenting Status: " + rentingStatus + "\n";
-        }
+    @Override
+    public String toString() {
+        return "Client ID: " + clientID +
+                "\nName: " + clientName +
+                "\nAddress: " + clientAddress +
+                "\nContact: " + clientContact +
+                "\nEmail: " + clientEmail +
+                "\nRenting Status: " + rentingStatus + "\n";
     }
 
     // List to store all clients
-    private List<Client> clients = new ArrayList<>();
-
+    private List<Client_Input> clients = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
 
     // Method to show all clients
@@ -103,7 +92,7 @@ public class Client_Input {
             System.out.println("No clients found.");
         } else {
             System.out.println("Client List:");
-            for (Client client : clients) {
+            for (Client_Input client : clients) {
                 System.out.println(client.toString());
             }
         }
@@ -114,7 +103,7 @@ public class Client_Input {
         if (findClientByID(clientID) != null) {
             System.out.println("Client with ID " + clientID + " already exists.");
         } else {
-            Client newClient = new Client(clientID, clientName, clientAddress, clientContact, clientEmail, rentingStatus);
+            Client_Input newClient = new Client_Input();
             clients.add(newClient);
             System.out.println("Client added successfully.");
         }
@@ -122,7 +111,7 @@ public class Client_Input {
 
     // Method to update client information
     public void updateClient(String clientID, String newName, String newAddress, String newContact, String newEmail, String newRentingStatus) {
-        Client client = findClientByID(clientID);
+        Client_Input client = findClientByID(clientID);
         if (client != null) {
             client.setClientName(newName);
             client.setClientAddress(newAddress);
@@ -137,7 +126,7 @@ public class Client_Input {
 
     // Method to delete a client
     public void deleteClient(String clientID) {
-        Client client = findClientByID(clientID);
+        Client_Input client = findClientByID(clientID);
         if (client != null) {
             clients.remove(client);
             System.out.println("Client deleted successfully.");
@@ -147,8 +136,8 @@ public class Client_Input {
     }
 
     // Helper method to find a client by their ID
-    private Client findClientByID(String clientID) {
-        for (Client client : clients) {
+    private Client_Input findClientByID(String clientID) {
+        for (Client_Input client : clients) {
             if (client.getClientID().equals(clientID)) {
                 return client;
             }
@@ -180,4 +169,51 @@ public class Client_Input {
         // Add the new client to the list
         addClient(clientID, clientName, clientAddress, clientContact, clientEmail, rentingStatus);
     }
+
+    // Non-static method
+    public void manageVehicleRentalActions() {
+        Vehicles vehicle1 = new Vehicles("V123", "ABC123", "Toyota", "Corolla", 50.0, "Car", "Available");
+        Vehicles vehicle2 = new Vehicles("V124", "XYZ456", "Honda", "Civic", 60.0, "Car", "Available");
+
+        // Loop to handle user interactions
+        while (true) {
+            Vehicles.displayUserVehicleChoices();  // This must be an instance method, or call it appropriately
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // Consume newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Viewing vehicle details...");
+                    System.out.println(vehicle1.toString());
+                    System.out.println(vehicle2.toString());
+                    break;
+                case 2:
+                    System.out.println("Checking vehicle availability...");
+                    System.out.println("Vehicle 1: " + vehicle1.getVehicleStatus());
+                    System.out.println("Vehicle 2: " + vehicle2.getVehicleStatus());
+                    break;
+                case 3:
+                    System.out.println("Renting a vehicle...");
+                    System.out.print("Enter vehicle ID: ");
+                    String vehicleId = scanner.nextLine();
+                    System.out.print("Enter rental date (yyyy-mm-dd): ");
+                    String rentalDate = scanner.nextLine();
+                    System.out.print("Enter return date (yyyy-mm-dd): ");
+                    String returnDate = scanner.nextLine();
+                    System.out.println("Vehicle rented successfully.");
+                    break;
+                case 4:
+                    System.out.println("Returning a vehicle...");
+                    // Code to return a vehicle goes here
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    return;  // Exit the loop and return from the method
+                default:
+                    System.out.println("Invalid choice, please try again.");
+                    break;
+            }
+        }
+    }
 }
+

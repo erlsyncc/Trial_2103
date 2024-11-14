@@ -1,4 +1,3 @@
-
 package vehiclerentasystem;
 import java.util.Scanner;
 
@@ -8,13 +7,14 @@ public class UserMenu {
 
     public void displayUserMenu() {
         int userChoice = 0;
-        
+        Client_Input clientInput = new Client_Input(); // Create an instance of Client_Input
+
         while (userChoice != 5) {
             System.out.println("\nUser Menu:");
             System.out.println("1. Input Client Information");
             System.out.println("2. Create Rental Form");
             System.out.println("3. View Rental Status");
-            System.out.println("4. View Available Vehicles");
+            System.out.println("4. Manage Vehicle Rentals");
             System.out.println("5. Exit");
 
             System.out.print("Please choose an option (1-5): ");
@@ -23,7 +23,7 @@ public class UserMenu {
 
             switch (userChoice) {
                 case 1:
-                    inputClientDetails();
+                    inputClientDetails(clientInput);  // Pass clientInput to inputClientDetails method
                     break;
                 case 2:
                     createRentalForm();
@@ -32,7 +32,7 @@ public class UserMenu {
                     viewRentalStatus();
                     break;
                 case 4:
-                    viewAvailableVehicles();
+                     clientInput.manageVehicleRentalActions();  // Call the method correctly here
                     break;
                 case 5:
                     System.out.println("Exiting...");
@@ -44,15 +44,13 @@ public class UserMenu {
     }
 
     // Method to input client information
-    private void inputClientDetails() {
-        Client_Input client = new Client_Input();
-        client.inputClientDetails();
-
-        // Display the entered client information
+    private void inputClientDetails(Client_Input clientInput) {
+        clientInput.inputClientDetails();
+        // Display the entered client information (assuming clientInput has a method for this)
         System.out.println("\nClient Information:");
-        System.out.println(client);
+        clientInput.showClientList(); // Show the list of clients
     }
-    
+
     // Method to create a rental form
     private void createRentalForm() {
         System.out.println("\nCreating Rental Form...");
@@ -79,14 +77,6 @@ public class UserMenu {
         System.out.println("Status: Pending"); // Replace this with actual status check logic
     }
 
-    // Method to view available vehicles
-    private void viewAvailableVehicles() {
-        System.out.println("\nAvailable Vehicles:");
-        System.out.println("Vehicle ID: VH-001 | Model: Sedan | Status: Available");
-        System.out.println("Vehicle ID: VH-002 | Model: SUV | Status: Available");
-        System.out.println("Vehicle ID: VH-003 | Model: Truck | Status: Unavailable");
-        // Add logic to show actual available vehicles
-    }
-}
+        }
     
 

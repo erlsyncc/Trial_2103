@@ -8,7 +8,7 @@ public class VehicleCar extends Vehicles {
     private double carPrice; // price per day
 
     // Constructor
-    public VehicleCar(String vehicleID, String registrationNumber, String make, double rentalRate, String model) {
+    public VehicleCar(String vehicleID, String registrationNumber, String make, String model, double rentalRate, String available) {
         super(vehicleID, registrationNumber, make, rentalRate);
         this.carModel = carModel;
         this.carDescription = carDescription;

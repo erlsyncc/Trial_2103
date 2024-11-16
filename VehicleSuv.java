@@ -5,7 +5,7 @@ public class VehicleSuv extends Vehicles {
     private boolean isFourWheelDrive;
 
     // Constructor
-    public VehicleSuv (String vehicleID, String registrationNumber, String make, double rentalRate, String model, boolean isFourWheelDrive) {
+    public VehicleSuv (String vehicleID, String registrationNumber, String make, String model, double rentalRate, boolean isFourWheelDrive) {
          super(vehicleID, registrationNumber, make, rentalRate);
         this.seatingCapacity = seatingCapacity;
         this.isFourWheelDrive = isFourWheelDrive;

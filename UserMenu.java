@@ -1,9 +1,21 @@
 package vehiclerentasystem;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserMenu {
-
     private Scanner scanner = new Scanner(System.in);
+    private List<Vehicles> vehicleList = new ArrayList<>();
+    private Iterable<rentingStatus> rentingStatusList;
+
+    public UserMenu() {
+        // Initialize with some sample vehicles
+        vehicleList.add(new VehicleCar("V001", "ABC123", "Toyota", "Corolla", 3000, "Available"));
+        vehicleList.add(new VehicleSuv("V002", "ABC124", "Mitsubishi", "Montero", 4500, true));
+        vehicleList.add(new VehicleTruck("V003", "ABC124", "Mitsubishi", "L300", 8500, 6));
+        vehicleList.add(new VehicleMotor("V004","ABC125", "Honda", "Click 125", 1400, true));
+    }
 
     public void displayUserMenu() {
         int userChoice = 0;
@@ -23,18 +35,16 @@ public class UserMenu {
 
             switch (userChoice) {
                 case 1:
-                    inputClientDetails(clientInput);  // Pass clientInput to inputClientDetails method
+                    inputClientDetails(clientInput);
+                    createRentalForm(clientInput);
                     break;
                 case 2:
-                    createRentalForm();
+                     viewRentalStatus();
                     break;
                 case 3:
-                    viewRentalStatus();
+                    clientInput.manageVehicleRentalActions();
                     break;
                 case 4:
-                     clientInput.manageVehicleRentalActions();  // Call the method correctly here
-                    break;
-                case 5:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -45,38 +55,111 @@ public class UserMenu {
 
     // Method to input client information
     private void inputClientDetails(Client_Input clientInput) {
+        System.out.println("\nInputting Client Information...");
         clientInput.inputClientDetails();
-        // Display the entered client information (assuming clientInput has a method for this)
         System.out.println("\nClient Information:");
-        clientInput.showClientList(); // Show the list of clients
+        clientInput.showClientList();
     }
 
     // Method to create a rental form
-    private void createRentalForm() {
-        System.out.println("\nCreating Rental Form...");
-        // Assuming client info is already entered
+    private void createRentalForm(Client_Input clientInput) {
+        // Select a vehicle
+        String vehicleId = selectVehicle();
+        if (vehicleId == null) {
+            System.out.println("No available vehicles selected. Returning to menu.");
+            return;
+        }
+ 
+        // Proceed to create rental form if a vehicle was selected
         System.out.print("Enter rental start date (YYYY-MM-DD): ");
         String rentalDate = scanner.nextLine();
+
         System.out.print("Enter return date (YYYY-MM-DD): ");
         String returnDate = scanner.nextLine();
 
-        // Assuming client ID is hardcoded here, but you would pull this from the Client_Input object
-        RentalForm rental = new RentalForm("RF-001", "Client123", "VH-456", rentalDate, returnDate, 0.0, "Pending");
-        rental.createRentalForm("Client123", "VH-456", rentalDate, returnDate);
+        RentalForm rentalForm = new RentalForm("RF-001", clientInput.getClientID(), vehicleId, rentalDate, returnDate, 0.0, "Pending");
+
+        rentalForm.createRentalForm(clientInput.getClientID(), vehicleId, rentalDate, returnDate);
+
+        // Finalize the rental form and process payment
+        System.out.println("Finalizing Rental Form and Processing Payment...");
+        rentalForm.finalizeRentalForm(rentalForm.getFormId());
     }
 
-    // Method to view rental status
+    // Method to select a vehicle from the available list
+    private String selectVehicle() {
+        System.out.println("\nAvailable Vehicles:");
+
+        List<Vehicles> availableVehicles = new ArrayList<>();
+        int optionNumber = 1;
+        for (Vehicles vehicle : vehicleList) {
+            if ("Available".equalsIgnoreCase(vehicle.getVehicleStatus())) {
+                System.out.println(optionNumber + ". " + vehicle);
+                availableVehicles.add(vehicle);
+                optionNumber++;
+            }
+        }
+
+        if (availableVehicles.isEmpty()) {
+            System.out.println("No vehicles are currently available.");
+            return null;
+        }
+
+        System.out.print("\nEnter the number corresponding to the Vehicle you want to rent: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline character
+
+        if (choice > 0 && choice <= availableVehicles.size()) {
+            Vehicles selectedVehicle = availableVehicles.get(choice - 1);
+            selectedVehicle.setVehicleStatus("Rented"); // Mark as rented
+            return selectedVehicle.getVehicleID();
+        } else {
+            System.out.println("Invalid selection.");
+            return null;
+        }
+    }
+    
+    
     private void viewRentalStatus() {
         System.out.println("\nViewing Rental Status...");
-        // You would need to check the status of a rental form here, let's assume we pull it up by ID
         System.out.print("Enter rental form ID to view status: ");
         String formId = scanner.nextLine();
 
-        // Example rental status
-        System.out.println("Rental Form ID: " + formId);
-        System.out.println("Status: Pending"); // Replace this with actual status check logic
+        rentingStatus foundStatus = null;
+        for (rentingStatus rentalStatus : rentingStatusList) {
+            if (rentalStatus.getRentalFormId().equals(formId)) {
+                foundStatus = rentalStatus;
+                break;
+            }
+        }
+
+        if (foundStatus != null) {
+            foundStatus.displayRentalDetails();
+
+            System.out.println("\nOptions:");
+            System.out.println("1. View Receipt");
+            System.out.println("2. Cancel Booking");
+            System.out.println("3. Return to Main Menu");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    foundStatus.displayReceipt();
+                    break;
+                case 2:
+                    foundStatus.cancelBooking();
+                    break;
+                case 3:
+                    System.out.println("Returning to main menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        } else {
+            System.out.println("Rental form not found.");
+        }
     }
 
-        }
-    
-
+}

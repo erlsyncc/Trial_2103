@@ -5,7 +5,7 @@ public class VehicleMotor extends Vehicles {
     private double engineDisplacement; // in cc
 
     // Constructor
-    public VehicleMotor(String vehicleID, String registrationNumber, String make, double rentalRate, String model, boolean vehicleStatus) {
+    public VehicleMotor(String vehicleID, String registrationNumber, String make, String model, double rentalRate, boolean vehicleStatus) {
         super(vehicleID, registrationNumber, make, rentalRate);
         this.engineDisplacement = engineDisplacement;
     }

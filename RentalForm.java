@@ -2,6 +2,7 @@ package vehiclerentasystem;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
 
 public class RentalForm {
     private String formId;
@@ -66,16 +67,6 @@ public class RentalForm {
         return dailyRate * rentalDays;
     }
 
-    // Method to finalize a rental form
-    public void finalizeRentalForm(String formId) {
-        if (this.formId.equals(formId) && "Created".equals(this.rentalStatus)) {
-            this.rentalStatus = "Finalized";
-            displayFormStep("finalize");
-        } else {
-            System.out.println("Cannot finalize rental form. Either form ID does not match or rental is already cancelled/finalized.");
-        }
-    }
-
     // Switch-based display method for different form actions
     private void displayFormStep(String action) {
         switch (action.toLowerCase()) {
@@ -117,6 +108,38 @@ public class RentalForm {
                 break;
         }
     }
+    
+    public void finalizeRentalForm(String formId) {
+    if (this.formId.equals(formId) && "Created".equals(this.rentalStatus)) {
+        this.rentalStatus = "Finalized";
+        
+        // Prompt user for payment method
+        System.out.println("Select payment method: 1. Credit Card, 2. Cash, 3. Check");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        
+        Payments payment;
+        switch (choice) {
+            case 1:
+                payment = new PayCredit(this.formId, this.rentalCost);
+                break;
+            case 2:
+                payment = new PayCash(this.formId, this.rentalCost);
+                break;
+            case 3:
+                payment = new PayCheck(this.formId, this.rentalCost);
+                break;
+            default:
+                System.out.println("Invalid payment method selected.");
+                return;
+        }
+        
+        payment.makePayment();
+        displayFormStep("finalize");
+    } else {
+        System.out.println("Cannot finalize rental form. Either form ID does not match or rental is already cancelled/finalized.");
+    }
+}
 
     // Helper method to generate a unique form ID
     private String generateFormId() {
@@ -133,5 +156,52 @@ public class RentalForm {
     // Placeholder method to get the daily rate for a vehicle
     private double getDailyRate(String vehicleId) {
         return 100.0; // Example daily rate, replace with actual logic
+    }
+
+    String getFormId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    
+    // Inner Services class
+    public class Services {
+        private String driverName;
+        private String assistantName;
+        private String carseatType;
+
+        public Services(String driverName, String assistantName, String carseatType) {
+            this.driverName = driverName;
+            this.assistantName = assistantName;
+            this.carseatType = carseatType;
+        }
+
+        // Methods to add services
+        public void addDriver(String driverName) {
+            this.driverName = driverName;
+            System.out.println("Driver added: " + driverName);
+        }
+
+        public void addCarseat(String carseatType) {
+            this.carseatType = carseatType;
+            System.out.println("Carseat added: " + carseatType);
+        }
+
+        public void addRoadAssistant(String assistantName) {
+            this.assistantName = assistantName;
+            System.out.println("Road Assistant added: " + assistantName);
+        }
+
+        // Getter methods for services
+        public String getDriverName() {
+            return driverName;
+        }
+
+        public String getAssistantName() {
+            return assistantName;
+        }
+
+        public String getCarseatType() {
+            return carseatType;
+        }
     }
 }

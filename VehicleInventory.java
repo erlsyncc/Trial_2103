@@ -79,13 +79,13 @@ public class VehicleInventory {
 
         switch (vehicleType) {
             case "car":
-                newVehicle = new VehicleCar(vehicleID, make, model, rentalRate, "Available");
+                newVehicle = new VehicleCar(vehicleID, make, model, "Available", rentalRate, "Available");
                 break;
             case "truck":
                 System.out.print("Enter Load Capacity (in tons): ");
                 double loadCapacity = scanner.nextDouble();
                 scanner.nextLine(); // Consume newline
-                newVehicle = new VehicleTruck(vehicleID, make, model, rentalRate, "Available", loadCapacity);
+                newVehicle = new VehicleTruck(vehicleID, make, model, "Available", rentalRate, loadCapacity);
                 break;
             case "van":
                 System.out.print("Enter Seating Capacity: ");
@@ -97,13 +97,13 @@ public class VehicleInventory {
                 System.out.print("Has Sidecar? (true/false): ");
                 boolean hasSideCar = scanner.nextBoolean();
                 scanner.nextLine(); // Consume newline
-                newVehicle = new VehicleMotor(vehicleID, make, model, rentalRate, "Available", hasSideCar);
+                newVehicle = new VehicleMotor(vehicleID, make, model, "Available", rentalRate, hasSideCar);
                 break;
             case "suv":
                 System.out.print("Is Four-Wheel Drive? (true/false): ");
                 boolean isFourWheelDrive = scanner.nextBoolean();
                 scanner.nextLine(); // Consume newline
-                newVehicle = new VehicleSuv( vehicleID, make, model, rentalRate, "Available", isFourWheelDrive);
+                newVehicle = new VehicleSuv( vehicleID, make, model, "Available", rentalRate, isFourWheelDrive);
                 break;
             default:
                 System.out.println("Invalid vehicle type.");

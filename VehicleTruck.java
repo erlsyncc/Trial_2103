@@ -6,7 +6,7 @@ public class VehicleTruck  extends Vehicles {
     private int numOfAxles;
 
     // Constructor
-    public VehicleTruck(String vehicleID, String registrationNumber, String make, double rentalRate, String model, double loadCapacity) {
+    public VehicleTruck(String vehicleID, String registrationNumber, String make, String model, double rentalRate, double loadCapacity) {
          super(vehicleID, registrationNumber, make, rentalRate);
         this.loadCapacity = loadCapacity;
         this.numOfAxles = numOfAxles;

@@ -8,7 +8,6 @@ public class Inventory extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -178,7 +177,7 @@ public class Inventory extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Invalid input! Please fill all fields.", "Error", JOptionPane.ERROR_MESSAGE);
     }
     
-    }//GEN-LAST:event_btnAddActionPerformed
+    }
 
     /**
      * @param args the command line arguments
@@ -205,9 +204,7 @@ public class Inventory extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Inventory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Inventory().setVisible(true);
@@ -215,7 +212,6 @@ public class Inventory extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnShow;
@@ -223,5 +219,4 @@ public class Inventory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    // End of variables declaration//GEN-END:variables
 }
